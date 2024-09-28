@@ -1,0 +1,88 @@
+*{
+    background-color:cadetblue;
+    
+}
+/* ------ [DIV PRINCIPAL] ------ */
+
+.contenedor-principal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: rgb(53, 92, 93);
+    margin: 100px 100px 100px 350px;
+    width: 50%;
+    border: 2px solid white;
+    padding: 40px 0px 40px 0px;
+}
+
+/* ------ [DIVS] ------ */
+
+.contenedor-limite {
+   
+    border: 1px solid black;
+    padding: 0px 20px 0px 20px;
+}
+
+.contenedor-contador {
+   
+    border: 1px solid orange;
+}
+
+.contenedor-texto {
+    width: 100px;
+    border: 1px solid blue;
+}
+
+.contenedor-boton {
+  
+    border: 1px solid white;
+}
+
+.boton {
+    background-color: green;
+    border-radius: 20px;
+    height: 30px;
+    width: 150px;
+    color: white;
+    font-weight: bold;
+}
+
+/* ------ [TABLA] ------ */
+
+.contenedor-fila{
+    border-bottom: 2px solid white;
+    width: 100px;
+}
+
+/* ------ [PLACEHOLDER DE INPUT TEXTO] ------ */
+
+.input-texto{
+    background-color: white;
+    height: 30px;
+    width: 300px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 15px;
+    color: rgb(73, 73, 73);
+}
+
+/* ------ [TH] ------ */
+
+th{
+    font-size: 18px;
+}
+
+/* ------ [CONTROL DE COLORES DE LOS NUMEROS] ------ */
+
+.verde{
+    color: green;
+}
+
+.rojo{
+    color: red;
+}
+
+.naranja{
+    color: orange;
+}

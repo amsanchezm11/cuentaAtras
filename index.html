@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Atr&aacute;s</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css" />
+</head>
+
+<body>
+
+    <div id="contenedor"></div>
+
+</body>
+
+<script>
+   
+    // Genero una bandera de control
+
+    let bandera = true;
+
+    // Generamos los divs que van a ir en el div principal
+
+    let fechaLimite = document.createElement("div");
+    let contador = document.createElement("div");
+    let nuevaFecha = document.createElement("div");
+    let botonCambio = document.createElement("div");
+
+
+    // Generamos el input y el boton y los añadimos a sus divs correspondientes
+
+    let inputTexto = document.createElement("input");
+    let boton = document.createElement("button");
+
+    nuevaFecha.appendChild(inputTexto);
+    botonCambio.appendChild(boton);
+
+    // Añado el texto al boton
+
+    boton.textContent="Cambiar Fecha";
+
+    // Añadimos una fech a fechaLimite
+
+    let fecha = new Date('2024-12-28 23:59:59');
+
+    let textoLimite = document.createElement("h1");
+    textoLimite.textContent = "Fecha Límite " + fecha.toLocaleDateString() + ", " + fecha.toLocaleTimeString();
+    console.log(fecha.toLocaleDateString());
+    fechaLimite.appendChild(textoLimite);
+
+    // Añadimos ids a los divs por si los necesitamos en un futuro
+
+    fechaLimite.setAttribute("id","contenedorLimite");
+    contador.setAttribute("id","contenedorContador");
+    inputTexto.setAttribute("id","contenedorTexto");
+    boton.setAttribute("id","contenedorBoton");
+
+
+    // Añadimos las clases a los divs
+
+    fechaLimite.setAttribute("class","contenedor-limite");
+    contador.setAttribute("class","contenedor-contador");
+    nuevaFecha.setAttribute("class","contenedor-texto");
+    botonCambio.setAttribute("class","contenedor-boton");
+
+    // Añadimos los tipos y clases a los input
+
+    inputTexto.setAttribute("type","text");
+    inputTexto.setAttribute("placeholder","Introduce nueva fecha");
+    inputTexto.setAttribute("class", "input-texto");
+    boton.setAttribute("class", "boton");
+
+
+    // Añadimos los divs al div principal y le añadimos una clase
+
+    let contenedor = document.getElementById("contenedor");
+    contenedor.append(fechaLimite,contador,inputTexto,boton);
+    contenedor.setAttribute("class","contenedor-principal");
+
+    // Generar tabla div-fecha limite
+
+    let tabla = document.createElement("table");
+
+    let thead = document.createElement("thead");
+    let tbody = document.createElement("tbody");
+
+    let fila = document.createElement("tr");
+    let fila2 = document.createElement("tr");
+
+    let mesesTexto = document.createElement("th");
+    let diasTexto = document.createElement("th");
+    let horasTexto = document.createElement("th");
+    let minutosTexto = document.createElement("th");
+    let segundosTexto = document.createElement("th");
+
+    let meses = document.createElement("th");
+    let dias = document.createElement("th");
+    let horas = document.createElement("th");
+    let minutos = document.createElement("th");
+    let segundos = document.createElement("th");
+
+    fila.setAttribute("class","contenedor-fila");
+    mesesTexto.textContent = "Mes";
+    diasTexto.textContent = "Día";
+    horasTexto.textContent = "Hora";
+    minutosTexto.textContent = "Minuto";
+    segundosTexto.textContent = "Segundo";
+
+    // Añadimos una clase a los elementos de la fila
+
+    mesesTexto.setAttribute("class","contenedor-fila");
+    diasTexto.setAttribute("class","contenedor-fila");
+    horasTexto.setAttribute("class","contenedor-fila");
+    minutosTexto.setAttribute("class","contenedor-fila");
+    segundosTexto.setAttribute("class","contenedor-fila");
+  
+
+    // Añadimos los elementos a sus elementos padres para formar la tabla
+
+    fila.append(mesesTexto,diasTexto,horasTexto,minutosTexto,segundosTexto);
+    fila2.append(meses,dias,horas,minutos,segundos); 
+    tabla.append(fila,fila2);
+    contador.appendChild(tabla);
+
+    // Añadimos un evento de click a boton vinculado a una funcion
+
+    boton.onclick = cambiarFecha;
+
+    // Funcion cambiar fecha [Cambiará la fecha límite al activar el evento de click que la llame]
+
+    function cambiarFecha() {
+        let valorInput = document.getElementById("contenedorTexto").value;
+        
+        let fechaNueva = new Date(valorInput);
+       
+        if(Date.parse(fechaNueva)){
+            textoLimite.innerHTML= "Fecha Límite " +fechaNueva.getDate() + "/" + (fechaNueva.getMonth()+1) + "/" + fechaNueva.getFullYear() +", " + fechaNueva.getHours() +":"+fechaNueva.getMinutes()+":"+fechaNueva.getSeconds();
+            fecha = fechaNueva;
+            bandera=true;
+        }else{
+            alert("Has introducido mal la fecha. Vuelve a intentarlo");
+        }
+    }
+
+    // Creamos las constantes que reflejaran el tiempo en milisegundos [La usaremos en la funcion calcularDiferencia()]
+
+    const milisegundosSegundos = 1000;
+    const milisegundosMinutos = milisegundosSegundos * 60;
+    const milisegundosHoras = milisegundosMinutos * 60;
+    const milisegundosDias = milisegundosHoras * 24;
+    const milisegundosMeses = milisegundosDias * 30;
+    
+    // Funcion calcular diferencia
+
+    function calcularDiferencia() {
+
+        // Creamos la fecha de hoy y la pasamos a milisegundos y creamos la diferencia entre: [fecha limite - hoy]
+        const fechaAhora = new Date().getTime();
+        const diferencia = fecha.getTime() - fechaAhora;
+        
+        // Calculo de diferencias de tiempo en meses,dias,horas,minutos y segundos
+        const mesesDif = Math.floor(diferencia / milisegundosMeses);
+        
+        const diasDif = Math.floor((diferencia % milisegundosMeses) / milisegundosDias);
+       
+        const horasDif = Math.floor((diferencia % milisegundosDias) / milisegundosHoras);
+        
+        const minutosDif = Math.floor((diferencia % milisegundosHoras) / milisegundosMinutos);
+        
+        const segundosDif = Math.floor((diferencia % milisegundosMinutos) / milisegundosSegundos);
+        
+        // Cambiamos los valores de las variables que reflejarán el contador
+        meses.innerHTML = mesesDif;
+        dias.innerHTML = diasDif;
+        horas.innerHTML = horasDif; 
+        segundos.innerHTML = segundosDif;
+        minutos.innerHTML = minutosDif;
+        
+        // Control del contador cuando llegue a 0 y uso de bandera de control para parar el evento alert
+        if(diferencia<=0){
+            meses.innerHTML=0;
+            dias.innerHTML=0;
+            horas.innerHTML=0;
+            minutos.innerHTML=0;
+            segundos.innerHTML=0;
+
+            if(diferencia<0 & bandera==true){
+                alert("Se acabó el tiempo!!!");
+                bandera=false;
+            }
+        
+        }else{
+            // Llamada de la funcion cuentaAtras con setInterval
+            window.setInterval(cuentaAtras,1000);
+        }  
+
+        // Control de color por diferencia de tiempo
+        // Verde[queda mas de 1 mes] - Naranja[quedan menos de 2 semanas y mas de 1] - Rojo[queda menos de 1 semana]
+        if(mesesDif>1){
+                fila2.setAttribute("class","verde");
+            }else if (mesesDif==0 && diasDif<14 && diasDif>7) {
+                fila2.setAttribute("class","naranja");
+            } else{
+                fila2.setAttribute("class","rojo")
+            }
+
+          //return {meses,dias,horas,minutos,segundos}; 
+        
+    }
+
+    // Llamada a la funcion calcularDiferencia()
+    calcularDiferencia();
+
+    // Funcion cuenta atras
+
+     function cuentaAtras() {  
+        
+        const tiempoRestante = calcularDiferencia();
+
+        return tiempoRestante;
+    } 
+
+
+</script>
+
+</html>
